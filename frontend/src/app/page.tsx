@@ -66,25 +66,52 @@ export default function LandingPage() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden fixed top-16 left-0 w-full h-[calc(100vh-64px)] bg-background z-[60] border-t border-border overflow-y-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="md:hidden fixed inset-0 bg-black z-[100] flex flex-col p-6 overflow-y-auto"
           >
-            <div className="container px-6 py-10 flex flex-col gap-8 text-xl font-bold">
-              <Link href="#features" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors py-2 border-b border-border/50">Features</Link>
-              <Link href="#how-it-works" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors py-2 border-b border-border/50">How it works</Link>
-              <Link href="#pricing" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors py-2 border-b border-border/50">Pricing</Link>
-              <Link href="#contact" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors py-2 ">Contact</Link>
-              
-              <div className="mt-4 flex flex-col gap-4">
-                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full h-14 rounded-2xl text-lg font-bold">Log in</Button>
-                </Link>
-                <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full h-14 rounded-2xl text-lg font-bold shadow-xl shadow-primary/20">Get Started</Button>
-                </Link>
+            <div className="flex justify-between items-center mb-12">
+               <div className="flex items-center gap-2">
+                 <Rocket className="h-6 w-6 text-primary" />
+                 <span className="text-xl font-bold text-white">CareerRoad AI</span>
+               </div>
+               <button className="p-2 text-white bg-white/10 rounded-xl" onClick={() => setIsMenuOpen(false)}>
+                 <X size={28} />
+               </button>
+            </div>
+
+            <div className="flex flex-col gap-6">
+              <Link href="#features" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-white hover:text-primary transition-colors flex justify-between items-center border-b border-white/10 pb-4">
+                Features <ArrowRight size={20} />
+              </Link>
+              <Link href="#how-it-works" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-white hover:text-primary transition-colors flex justify-between items-center border-b border-white/10 pb-4">
+                How It Works <ArrowRight size={20} />
+              </Link>
+              <Link href="#pricing" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-white hover:text-primary transition-colors flex justify-between items-center border-b border-white/10 pb-4">
+                Pricing <ArrowRight size={20} />
+              </Link>
+              <Link href="#contact" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-white hover:text-primary transition-colors flex justify-between items-center border-b border-white/10 pb-4">
+                Contact <ArrowRight size={20} />
+              </Link>
+            </div>
+
+            <div className="mt-auto pt-10 flex flex-col gap-4">
+              <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl mb-4 border border-white/10">
+                <span className="text-white font-bold">Switch Theme</span>
+                <button 
+                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    className="p-3 bg-primary/20 rounded-xl text-primary"
+                >
+                    {mounted && (theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />)}
+                </button>
               </div>
+              <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                <Button variant="outline" className="w-full h-14 rounded-2xl text-lg font-bold border-white/20 text-white hover:bg-white/10">Log in</Button>
+              </Link>
+              <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
+                <Button className="w-full h-14 rounded-2xl text-lg font-bold shadow-2xl shadow-primary/40">Get Started Free</Button>
+              </Link>
             </div>
           </motion.div>
         )}
