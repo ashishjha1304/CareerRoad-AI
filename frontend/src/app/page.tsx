@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Github, Linkedin, Menu, X, Rocket, Target, Zap, CheckCircle2, Moon, Sun, ArrowRight, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
 
 export default function LandingPage() {
@@ -62,6 +62,32 @@ export default function LandingPage() {
           </div>
         </div>
       </nav>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden border-b border-border bg-background absolute top-16 left-0 w-full z-40 overflow-hidden"
+          >
+            <div className="container px-4 py-8 flex flex-col gap-6 text-lg font-bold">
+              <Link href="#features" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors">Features</Link>
+              <Link href="#how-it-works" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors">How it works</Link>
+              <Link href="#pricing" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors">Pricing</Link>
+              <Link href="#contact" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors">Contact</Link>
+              <div className="pt-4 border-t border-border flex flex-col gap-4">
+                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="outline" className="w-full h-12 rounded-xl">Log in</Button>
+                </Link>
+                <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
+                  <Button className="w-full h-12 rounded-xl">Get Started</Button>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main className="flex-1">
         <section className="relative overflow-hidden pt-32 pb-40 md:pt-48 md:pb-60">
