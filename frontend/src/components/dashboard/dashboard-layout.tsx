@@ -8,7 +8,7 @@ import {
     LayoutDashboard, 
     Map, 
     User, 
-    Settings, 
+    Settings as HelpCircle, 
     LogOut, 
     Rocket,
     Menu,
@@ -22,7 +22,10 @@ import {
     Copy,
     Smartphone,
     Check,
-    Mail
+    Mail,
+    Brain,
+    Sparkles,
+    Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
@@ -198,6 +201,67 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         await supabase.auth.signOut();
         router.push('/');
     };
+
+    // Show a beautiful syncing screen if we have auth user but no DB profile yet
+    // This gives the backend time to finish the upsert
+    const isSyncing = user && (!profile?.career_goal || !profile?.full_name) && (user.user_metadata?.career_goal);
+
+    if (isSyncing) {
+        return (
+            <div className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center p-6 overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/30 blur-[120px] rounded-full" />
+                    <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/30 blur-[120px] rounded-full" />
+                </div>
+
+                <div className="relative mb-12">
+                    <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+                        className="w-48 h-48 rounded-full border-t-2 border-r-2 border-primary/20"
+                    />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        <motion.div
+                            animate={{ scale: [1, 1.1, 1] }}
+                            transition={{ repeat: Infinity, duration: 4 }}
+                            className="bg-primary/10 p-6 rounded-[2rem] border border-primary/20 shadow-2xl shadow-primary/20"
+                        >
+                            <Brain className="h-12 w-12 text-primary" />
+                        </motion.div>
+                    </div>
+                </div>
+
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center max-w-md relative z-10"
+                >
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-black uppercase tracking-widest text-primary mb-6">
+                        <Sparkles size={12} className="animate-pulse" />
+                        Initializing Career Matrix
+                    </div>
+                    <h2 className="text-4xl font-black tracking-tighter mb-4 text-foreground">Synchronizing Your Profile</h2>
+                    <p className="text-muted-foreground font-medium leading-relaxed mb-8">
+                        Our AI is finalizing your profile and preparing your personalized career trajectory as a <span className="text-primary font-bold">"{user.user_metadata.career_goal}"</span>.
+                    </p>
+                    
+                    <div className="flex flex-col gap-3 w-full max-w-xs mx-auto">
+                        <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                            <motion.div 
+                                initial={{ width: "0%" }}
+                                animate={{ width: "100%" }}
+                                transition={{ duration: 4, ease: "easeInOut" }}
+                                className="h-full bg-primary shadow-[0_0_15px_rgba(var(--primary),0.5)]"
+                            />
+                        </div>
+                        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] animate-pulse text-center">Syncing with database...</p>
+                    </div>
+                </motion.div>
+                
+                <p className="fixed bottom-10 text-[10px] font-bold text-muted-foreground/30 uppercase tracking-[0.3em]">Architected by Ashish Jha</p>
+            </div>
+        );
+    }
 
     const sidebarItems = [
         { icon: <LayoutDashboard size={18} />, label: "Overview", href: "/dashboard" },

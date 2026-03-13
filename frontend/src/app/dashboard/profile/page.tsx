@@ -58,11 +58,11 @@ export default function ProfilePage() {
                     
                     // Priority: Backend Profile > Auth Metadata > Default
                     const finalName = profileData?.full_name || userMetadata?.full_name || '';
-                    const finalGoal = profileData?.career_goal || userMetadata?.career_goal || 'Global Professional';
+                    const finalGoal = profileData?.career_goal || userMetadata?.career_goal || '';
                     
                     setForm({ 
                         fullName: finalName, 
-                        careerGoal: finalGoal
+                        careerGoal: finalGoal || 'Global Professional'
                     });
                 } else {
                     setForm({
