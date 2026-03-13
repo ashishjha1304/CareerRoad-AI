@@ -17,8 +17,8 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
-      <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <div className="flex flex-col min-h-screen bg-background relative">
+      <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 transition-all duration-300">
         <div className="container flex h-16 items-center justify-between px-4 mx-auto">
           <div className="flex items-center gap-2">
             <div className="bg-primary/20 p-2 rounded-xl">
@@ -120,17 +120,17 @@ export default function LandingPage() {
       <main className="flex-1">
         <section className="relative overflow-hidden pt-32 pb-40 md:pt-48 md:pb-60">
           <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none bg-background">
-            {/* Animated Mesh blobs - different colors for light/dark */}
-            <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-blue-600/10 dark:bg-blue-600/20 blur-[130px] rounded-full animate-pulse" />
-            <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-indigo-600/10 dark:bg-indigo-600/15 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
-            <div className="absolute bottom-[-10%] left-[15%] w-[45%] h-[45%] bg-purple-600/10 dark:bg-purple-600/10 blur-[110px] rounded-full animate-pulse" style={{ animationDelay: '4s' }} />
-            <div className="absolute bottom-[10%] right-[10%] w-[40%] h-[40%] bg-sky-400/10 dark:bg-sky-400/10 blur-[100px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+            {/* Animated Mesh blobs - sophisticated colors for light/dark */}
+            <div className="absolute top-[-15%] left-[-10%] w-[70%] h-[70%] bg-blue-400/20 dark:bg-blue-600/20 blur-[130px] rounded-full animate-pulse" />
+            <div className="absolute top-[10%] right-[-15%] w-[60%] h-[60%] bg-indigo-300/20 dark:bg-indigo-600/15 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
+            <div className="absolute bottom-[-15%] left-[10%] w-[55%] h-[55%] bg-purple-300/15 dark:bg-purple-600/10 blur-[110px] rounded-full animate-pulse" style={{ animationDelay: '4s' }} />
+            <div className="absolute bottom-[5%] right-[5%] w-[50%] h-[50%] bg-sky-300/15 dark:bg-sky-400/10 blur-[100px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
             
-            {/* Dynamic Grid Overlay */}
-            <div className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]" style={{ backgroundImage: 'linear-gradient(currentColor 1.5px, transparent 1.5px), linear-gradient(90deg, currentColor 1.5px, transparent 1.5px)', backgroundSize: '60px 60px' }} />
+            {/* Dynamic Grid Overlay - more visible in light mode */}
+            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.1]" style={{ backgroundImage: 'linear-gradient(currentColor 1.5px, transparent 1.5px), linear-gradient(90deg, currentColor 1.5px, transparent 1.5px)', backgroundSize: '60px 60px' }} />
             
-            {/* Glossy gradient wrap */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+            {/* Soft gloss wrap */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background" />
           </div>
 
           <div className="container px-4 mx-auto text-center relative z-10">
