@@ -27,7 +27,7 @@ export default function LandingPage() {
             <span className="text-xl font-bold tracking-tight">CareerRoad <span className="text-primary italic">AI</span></span>
           </div>
 
-          <div className="hidden md:flex gap-8 items-center text-sm font-medium">
+          <div className="hidden md:flex gap-8 items-center text-sm font-medium text-foreground/80">
             <Link href="#features" className="hover:text-primary transition-colors">Features</Link>
             <Link href="#how-it-works" className="hover:text-primary transition-colors">How it works</Link>
             <Link href="#pricing" className="hover:text-primary transition-colors">Pricing</Link>
@@ -148,7 +148,7 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-foreground to-foreground/50 bg-clip-text text-transparent leading-[0.95] md:leading-[0.9]"
+                className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-foreground to-foreground/70 dark:from-white dark:to-white/50 bg-clip-text text-transparent leading-[0.95] md:leading-[0.9]"
             >
               Architect Your <br className="hidden md:block" />
               <span className="text-primary italic">Success Journey.</span>
