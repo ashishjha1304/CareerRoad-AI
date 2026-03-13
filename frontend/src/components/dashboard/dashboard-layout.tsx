@@ -108,7 +108,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             if (user) {
                 setUser(user);
 
-                const { data: profileData } = await supabase.from('profiles').select('subscription_status, full_name').eq('id', user.id).single();
+                const { data: profileData } = await supabase.from('profiles').select('subscription_status, full_name, career_goal').eq('id', user.id).single();
+                console.log('Profile Sync Status:', { hasProfile: !!profileData, hasGoal: !!profileData?.career_goal });
                 if (profileData) {
                     setProfile(profileData);
                 } else {
@@ -129,10 +130,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                     setRoadmap(rJson.data);
                     generateNotifications(rJson.data, profileData);
                 }
+                if (!profileData && user.user_metadata?.career_goal) {
+                    console.log('Profile still syncing, retrying in 3s...');
+                    setTimeout(getUser, 3000);
+                }
             }
         };
         getUser();
-    }, [router]);
+    }, [router, pathname]);
 
     const generateNotifications = (roadmapData: any, profileData: any) => {
         if (!roadmapData) return;

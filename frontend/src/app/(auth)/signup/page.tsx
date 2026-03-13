@@ -84,20 +84,32 @@ export default function SignupPage() {
       }
 
       if (user) {
-        fetch(`${API_URL}/api/auth/signup`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: user.id,
-            email,
-            password,
-            full_name: fullName,
-            career_goal: careerGoal,
-          }),
-        }).catch(err => console.error('Backend sync failed:', err));
+        try {
+          console.log('Syncing profile to backend...');
+          const syncRes = await fetch(`${API_URL}/api/auth/signup`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: user.id,
+              email,
+              password,
+              full_name: fullName,
+              career_goal: careerGoal,
+            }),
+          });
+          
+          if (!syncRes.ok) {
+            console.error('Backend profile creation returned error:', await syncRes.text());
+          } else {
+            console.log('Backend profile sync successful');
+          }
+        } catch (syncErr) {
+          console.error('Critical: Backend sync failed:', syncErr);
+        }
 
         // If auto-login happened (Confirm Email is OFF in Supabase)
         if (session) {
+          console.log('Instant login detected, navigating to dashboard...');
           router.push('/dashboard');
           return;
         }

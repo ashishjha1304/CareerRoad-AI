@@ -6,51 +6,55 @@ export const signup = async (req: Request, res: Response) => {
   const { id, email, full_name, career_goal } = req.body;
 
   try {
-    // We use the ID passed from frontend or fallback to looking up (though ID is preferred)
+    // We use the ID passed from frontend or fallback to looking up
     let userId = id;
 
     if (!userId) {
-      // Fallback: This only happens if frontend didn't pass ID for some reason
       const { data: { users }, error: listError } = await supabase.auth.admin.listUsers();
       if (listError) throw listError;
       const authUser = users.find(u => u.email === email);
       if (!authUser) {
-        return successResponse(res, null, 'Account created. Please check your email to confirm.', 201);
+        return successResponse(res, null, 'Account created partially. Profile sync might need retry.', 201);
       }
       userId = authUser.id;
     }
 
-    // Ensure we have the latest name and goal from metadata if not in body
     let finalFullName = full_name;
     let finalCareerGoal = career_goal;
-    
-    if (!finalFullName || !finalCareerGoal) {
+    let finalEmail = email;
+
+    // Proactively fetch User from Auth to get Email and Metadata if anything is missing
+    if (!finalEmail || !finalFullName || !finalCareerGoal) {
+      console.log('Fetching user data from Auth for sync:', userId);
       const { data: { user: authUser }, error: fetchError } = await supabase.auth.admin.getUserById(userId);
+      
       if (!fetchError && authUser) {
         finalFullName = finalFullName || authUser.user_metadata?.full_name || '';
         finalCareerGoal = finalCareerGoal || authUser.user_metadata?.career_goal || '';
+        finalEmail = finalEmail || authUser.email || '';
       }
     }
+
+    console.log('SYNCING: Upserting profile for:', finalEmail);
 
     const { error: profileError } = await supabase
       .from('profiles')
       .upsert([{ 
           id: userId, 
-          email, 
+          email: finalEmail, 
           full_name: finalFullName, 
-          career_goal: finalCareerGoal
+          career_goal: finalCareerGoal,
+          updated_at: new Date()
       }], { onConflict: 'id' });
 
     if (profileError) {
-      console.error('Error creating profile:', profileError);
-      // We don't throw here to avoid failing the whole request if profile storage fails
-      // as the user is already created in Supabase Auth
+      console.error('Profile Upsert Error:', profileError);
     }
 
-    return successResponse(res, { id: userId, email }, 'Profile created successfully', 201);
+    return successResponse(res, { id: userId, email: finalEmail }, 'Profile sync completed', 201);
   } catch (error: any) {
-    console.error('Signup error:', error);
-    return errorResponse(res, error.message || 'Profile creation failed', 400);
+    console.error('Backend Signup Sync Error:', error);
+    return errorResponse(res, error.message || 'Profile sync failed', 400);
   }
 };
 
