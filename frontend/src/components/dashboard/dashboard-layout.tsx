@@ -106,7 +106,15 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 setUser(user);
 
                 const { data: profileData } = await supabase.from('profiles').select('subscription_status, full_name').eq('id', user.id).single();
-                if (profileData) setProfile(profileData);
+                if (profileData) {
+                    setProfile(profileData);
+                } else {
+                    // Fallback to metadata for sidebar/header
+                    setProfile({
+                        full_name: user.user_metadata?.full_name || '',
+                        subscription_status: 'free'
+                    });
+                }
 
                 const { data: { session } } = await supabase.auth.getSession();
                 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';

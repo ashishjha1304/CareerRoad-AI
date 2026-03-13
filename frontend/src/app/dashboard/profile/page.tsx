@@ -41,6 +41,7 @@ export default function ProfilePage() {
                 return;
             }
             setUser(user);
+            const userMetadata = user.user_metadata;
 
             try {
                 const session = await supabase.auth.getSession();
@@ -54,9 +55,19 @@ export default function ProfilePage() {
                     const json = await profileRes.json();
                     const profileData = json.data;
                     setProfile(profileData);
+                    
+                    // Priority: Backend Profile > Auth Metadata > Default
+                    const finalName = profileData?.full_name || userMetadata?.full_name || '';
+                    const finalGoal = profileData?.career_goal || userMetadata?.career_goal || 'Global Professional';
+                    
                     setForm({ 
-                        fullName: profileData?.full_name || '', 
-                        careerGoal: profileData?.career_goal || 'Web Developer' 
+                        fullName: finalName, 
+                        careerGoal: finalGoal
+                    });
+                } else {
+                    setForm({
+                        fullName: userMetadata?.full_name || '',
+                        careerGoal: userMetadata?.career_goal || 'Global Professional'
                     });
                 }
             } catch (err) {
@@ -154,7 +165,7 @@ export default function ProfilePage() {
                                         <User size={48} className="text-muted-foreground/60" />
                                     </div>
                                 </div>
-                                <h2 className="text-2xl font-bold">{profile?.full_name || 'Incognito User'}</h2>
+                                <h2 className="text-2xl font-bold">{profile?.full_name || user?.user_metadata?.full_name || 'New Member'}</h2>
                                 <p className="text-muted-foreground text-sm font-medium mb-4">{user?.email}</p>
                                 <div className={`px-3 py-1.5 rounded-xl border inline-block ${profile?.subscription_status === 'pro' ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-primary/10 border-primary/20'}`}>
                                     <span className={`text-xs font-black uppercase tracking-wider ${profile?.subscription_status === 'pro' ? 'text-emerald-500' : 'text-primary'}`}>

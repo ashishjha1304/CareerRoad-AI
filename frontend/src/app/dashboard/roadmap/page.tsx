@@ -74,7 +74,9 @@ export default function RoadmapPage() {
                 }
 
                 setUser(session.user);
-                const finalCareerGoal = pData?.career_goal || session.user.user_metadata?.career_goal;
+                const finalCareerGoal = pData?.career_goal || session.user?.user_metadata?.career_goal;
+
+                console.log('Roadmap check:', { rData: !!rData, finalCareerGoal });
 
                 if (!rData && finalCareerGoal) {
                     return { needGeneration: true, careerPath: finalCareerGoal };

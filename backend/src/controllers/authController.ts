@@ -20,13 +20,25 @@ export const signup = async (req: Request, res: Response) => {
       userId = authUser.id;
     }
 
+    // Ensure we have the latest name and goal from metadata if not in body
+    let finalFullName = full_name;
+    let finalCareerGoal = career_goal;
+    
+    if (!finalFullName || !finalCareerGoal) {
+      const { data: { user: authUser }, error: fetchError } = await supabase.auth.admin.getUserById(userId);
+      if (!fetchError && authUser) {
+        finalFullName = finalFullName || authUser.user_metadata?.full_name || '';
+        finalCareerGoal = finalCareerGoal || authUser.user_metadata?.career_goal || '';
+      }
+    }
+
     const { error: profileError } = await supabase
       .from('profiles')
       .upsert([{ 
           id: userId, 
           email, 
-          full_name: full_name || '', 
-          career_goal: career_goal || '' 
+          full_name: finalFullName, 
+          career_goal: finalCareerGoal
       }], { onConflict: 'id' });
 
     if (profileError) {
