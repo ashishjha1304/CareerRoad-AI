@@ -29,6 +29,7 @@ import { DashboardLayout } from '@/components/dashboard/dashboard-layout';
 import { Certificate } from '@/components/dashboard/certificate';
 
 export default function RoadmapPage() {
+    const [user, setUser] = useState<any>(null);
     const [profile, setProfile] = useState<any>(null);
     const [roadmap, setRoadmap] = useState<any>(null);
     const [loading, setLoading] = useState(true);
@@ -72,8 +73,11 @@ export default function RoadmapPage() {
                     setRoadmap(rData);
                 }
 
-                if (!rData && pData?.career_goal) {
-                    return { needGeneration: true, careerPath: pData.career_goal };
+                setUser(session.user);
+                const finalCareerGoal = pData?.career_goal || session.user.user_metadata?.career_goal;
+
+                if (!rData && finalCareerGoal) {
+                    return { needGeneration: true, careerPath: finalCareerGoal };
                 }
             } catch (err) {
                 console.error('Error fetching roadmap data:', err);
@@ -338,7 +342,7 @@ export default function RoadmapPage() {
                                     </p>
                                 </motion.div>
                                 <Certificate 
-                                    userName={profile?.full_name || 'Alumni'}
+                                    userName={profile?.full_name || user?.user_metadata?.full_name || 'Alumni'}
                                     courseName={roadmap.title}
                                     date={new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                                     isPro={profile?.subscription_status === 'pro'}

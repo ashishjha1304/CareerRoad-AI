@@ -91,6 +91,7 @@ const StatCard = ({ title, value, icon, change, color }: any) => (
 const UPI_ID = '8591852039@fam';
 
 export default function DashboardPage() {
+    const [user, setUser] = useState<any>(null);
     const [profile, setProfile] = useState<any>(null);
     const [roadmap, setRoadmap] = useState<any>(null);
     const [loading, setLoading] = useState(true);
@@ -104,6 +105,7 @@ export default function DashboardPage() {
                 router.push('/login');
                 return;
             }
+            setUser(session.user);
             const token = session.access_token;
 
             try {
@@ -184,10 +186,10 @@ export default function DashboardPage() {
                   <Activity size={12} />
                   Live Performance Analytics
                 </motion.div>
-                <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-2">
-                    Level Up, {profile?.full_name?.split(' ')[0] || 'User'} <span className="text-primary opacity-40">/</span>
+                <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-2 text-foreground">
+                    Level Up, {(profile?.full_name || user?.user_metadata?.full_name || 'User').split(' ')[0]} <span className="text-primary opacity-40">/</span>
                 </h1>
-                <p className="text-muted-foreground text-lg italic tracking-tight font-medium">Your path to mastering <span className="text-foreground decoration-primary/30 underline underline-offset-4">{profile?.career_goal || 'Excellence'}</span> is accelerating.</p>
+                <p className="text-muted-foreground text-lg italic tracking-tight font-medium">Your path to mastering <span className="text-foreground decoration-primary/30 underline underline-offset-4 font-bold">{profile?.career_goal || user?.user_metadata?.career_goal || 'Excellence'}</span> is accelerating.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">

@@ -434,7 +434,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                                 <>
                                     <div className="text-right hidden xl:block">
                                         <p className="text-[11px] font-bold leading-none line-clamp-1 max-w-[120px]">
-                                            {profile?.full_name || user?.email?.split('@')[0] || 'User'}
+                                            {profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User'}
                                         </p>
                                         <p className={`text-[10px] font-bold mt-1 tracking-wider uppercase ${profile?.subscription_status === 'pro' ? 'text-emerald-500' : 'text-muted-foreground'}`}>
                                             {profile?.subscription_status === 'pro' ? 'PRO ACCOUNT' : 'Personal Account'}
@@ -445,7 +445,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                                         ? 'bg-gradient-to-tr from-emerald-500/40 to-teal-500/40 border-emerald-500/40 text-emerald-500'
                                         : 'bg-gradient-to-tr from-primary/40 to-indigo-500/40 border-primary/20'
                                     }`}>
-                                        {(profile?.full_name?.[0] || user?.email?.[0] || 'U').toUpperCase()}
+                                        {(profile?.full_name?.[0] || user?.user_metadata?.full_name?.[0] || user?.email?.[0] || 'U').toUpperCase()}
                                     </div>
                                 </>
                             ) : (
