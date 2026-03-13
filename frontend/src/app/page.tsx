@@ -148,7 +148,7 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-foreground to-foreground/50 bg-clip-text text-transparent leading-[0.95] md:leading-[0.9]"
+                className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent leading-[0.95] md:leading-[0.9]"
             >
               Architect Your <br className="hidden md:block" />
               <span className="text-primary italic">Success Journey.</span>
@@ -158,7 +158,7 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-lg md:text-2xl text-muted-foreground/80 max-w-3xl mx-auto mb-12 font-medium leading-relaxed"
+                className="text-lg md:text-2xl text-white/70 max-w-3xl mx-auto mb-12 font-medium leading-relaxed"
             >
               The industry-standard AI engine for career acceleration. From Data Architecture to Quantum Computing, we engineer your path to excellence.
             </motion.p>
@@ -366,8 +366,8 @@ export default function LandingPage() {
                 </div>
             </div>
             <div className="pt-8 border-t border-border/20 text-center">
-                <p className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground/40 mb-2">Developed and Architected by Ashish Jha</p>
-                <p className="text-[10px] text-muted-foreground/60">
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground/70 mb-2">Developed and Architected by Ashish Jha</p>
+                <p className="text-[10px] text-muted-foreground/80">
                     © 2026 CareerRoad AI. Built with <span className="text-primary">Passion</span> for students globally.
                 </p>
             </div>
