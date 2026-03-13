@@ -43,7 +43,7 @@ export default function SignupPage() {
     setError(null);
 
     try {
-      const { data: { user }, error: signupError } = await supabase.auth.signUp({
+      const { data: { user, session }, error: signupError } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -65,8 +65,6 @@ export default function SignupPage() {
       }
 
       if (user) {
-        // Sync with our backend - don't await if it's slow (Render cold start)
-        // We pass the user.id to avoid expensive listUsers calls on backend
         fetch(`${API_URL}/api/auth/signup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -78,6 +76,12 @@ export default function SignupPage() {
             career_goal: careerGoal,
           }),
         }).catch(err => console.error('Backend sync failed:', err));
+
+        // If auto-login happened (Confirm Email is OFF in Supabase)
+        if (session) {
+          router.push('/dashboard');
+          return;
+        }
       }
 
       setSuccess(true);
@@ -99,20 +103,17 @@ export default function SignupPage() {
           <div className="bg-emerald-500/10 border border-emerald-500/20 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 className="h-10 w-10 text-emerald-500" />
           </div>
-          <h2 className="text-3xl font-black tracking-tight mb-3">Account Created!</h2>
-          <p className="text-muted-foreground mb-2 text-lg">
-            Welcome aboard, <span className="font-bold text-foreground">{fullName.split(' ')[0]}</span>!
-          </p>
-          <p className="text-muted-foreground text-sm mb-8">
-            We've sent a confirmation email to <span className="font-semibold text-foreground">{email}</span>.
-            Please verify your email, then log in to start your roadmap.
+          <h2 className="text-3xl font-black tracking-tight mb-3">Welcome Aboard!</h2>
+          <p className="text-muted-foreground mb-6 text-lg">
+            Your account is ready, <span className="font-bold text-foreground">{fullName.split(' ')[0]}</span>!
+            Start your journey towards becoming a <span className="text-primary font-bold">{careerGoal}</span>.
           </p>
           <Button
             size="lg"
-            className="w-full h-12 rounded-2xl font-bold"
+            className="w-full h-14 rounded-2xl font-bold shadow-xl shadow-primary/20"
             onClick={() => router.push('/login')}
           >
-            Go to Login
+            Start Your Roadmap
           </Button>
         </motion.div>
       </div>
