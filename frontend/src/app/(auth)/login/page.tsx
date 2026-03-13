@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Rocket, Loader2, Mail, Lock, X, CheckCircle2, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -293,5 +293,17 @@ export default function LoginPage() {
       )}
     </AnimatePresence>
     </>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="h-10 w-10 text-primary animate-spin" />
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 }
