@@ -29,9 +29,10 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
   if (!userId) return errorResponse(res, 'Unauthorized', 401);
 
   try {
+    // Only allow updating full_name. career_goal is permanent.
     const { data: profile, error } = await supabase
       .from('profiles')
-      .update({ full_name, career_goal, updated_at: new Date() })
+      .update({ full_name, updated_at: new Date() })
       .eq('id', userId)
       .select()
       .single();
