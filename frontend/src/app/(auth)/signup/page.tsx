@@ -65,16 +65,19 @@ export default function SignupPage() {
       }
 
       if (user) {
-        await fetch(`${API_URL}/api/auth/signup`, {
+        // Sync with our backend - don't await if it's slow (Render cold start)
+        // We pass the user.id to avoid expensive listUsers calls on backend
+        fetch(`${API_URL}/api/auth/signup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            id: user.id,
             email,
             password,
             full_name: fullName,
             career_goal: careerGoal,
           }),
-        });
+        }).catch(err => console.error('Backend sync failed:', err));
       }
 
       setSuccess(true);

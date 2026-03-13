@@ -3,28 +3,27 @@ import { supabase } from '../config/supabase';
 import { successResponse, errorResponse } from '../utils/apiResponse';
 
 export const signup = async (req: Request, res: Response) => {
-  const { email, full_name, career_goal } = req.body;
+  const { id, email, full_name, career_goal } = req.body;
 
   try {
-    // NOTE: Auth user is already created by the frontend via supabase.auth.signUp().
-    // This endpoint only handles creating the corresponding profile row.
-    // We look up the user by email to get their ID.
-    const { data: { users }, error: listError } = await supabase.auth.admin.listUsers();
-    
-    if (listError) throw listError;
+    // We use the ID passed from frontend or fallback to looking up (though ID is preferred)
+    let userId = id;
 
-    const authUser = users.find(u => u.email === email);
-
-    if (!authUser) {
-      // If user not found yet (email confirmation pending), create profile with upsert
-      // This case handles when supabase requires email confirmation
-      return successResponse(res, null, 'Account created. Please check your email to confirm.', 201);
+    if (!userId) {
+      // Fallback: This only happens if frontend didn't pass ID for some reason
+      const { data: { users }, error: listError } = await supabase.auth.admin.listUsers();
+      if (listError) throw listError;
+      const authUser = users.find(u => u.email === email);
+      if (!authUser) {
+        return successResponse(res, null, 'Account created. Please check your email to confirm.', 201);
+      }
+      userId = authUser.id;
     }
 
     const { error: profileError } = await supabase
       .from('profiles')
       .upsert([{ 
-          id: authUser.id, 
+          id: userId, 
           email, 
           full_name: full_name || '', 
           career_goal: career_goal || '' 
@@ -32,10 +31,13 @@ export const signup = async (req: Request, res: Response) => {
 
     if (profileError) {
       console.error('Error creating profile:', profileError);
+      // We don't throw here to avoid failing the whole request if profile storage fails
+      // as the user is already created in Supabase Auth
     }
 
-    return successResponse(res, { id: authUser.id, email }, 'Profile created successfully', 201);
+    return successResponse(res, { id: userId, email }, 'Profile created successfully', 201);
   } catch (error: any) {
+    console.error('Signup error:', error);
     return errorResponse(res, error.message || 'Profile creation failed', 400);
   }
 };
