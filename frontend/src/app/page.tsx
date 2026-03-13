@@ -69,36 +69,36 @@ export default function LandingPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="md:hidden fixed inset-0 bg-black z-[100] flex flex-col p-6 overflow-y-auto"
+            className="md:hidden fixed inset-0 bg-background z-[100] flex flex-col p-6 overflow-y-auto"
           >
             <div className="flex justify-between items-center mb-12">
                <div className="flex items-center gap-2">
                  <Rocket className="h-6 w-6 text-primary" />
-                 <span className="text-xl font-bold text-white">CareerRoad AI</span>
+                 <span className="text-xl font-bold text-foreground">CareerRoad AI</span>
                </div>
-               <button className="p-2 text-white bg-white/10 rounded-xl" onClick={() => setIsMenuOpen(false)}>
+               <button className="p-2 text-foreground bg-muted rounded-xl" onClick={() => setIsMenuOpen(false)}>
                  <X size={28} />
                </button>
             </div>
 
             <div className="flex flex-col gap-6">
-              <Link href="#features" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-white hover:text-primary transition-colors flex justify-between items-center border-b border-white/10 pb-4">
+              <Link href="#features" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-foreground hover:text-primary transition-colors flex justify-between items-center border-b border-border/50 pb-4">
                 Features <ArrowRight size={20} />
               </Link>
-              <Link href="#how-it-works" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-white hover:text-primary transition-colors flex justify-between items-center border-b border-white/10 pb-4">
+              <Link href="#how-it-works" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-foreground hover:text-primary transition-colors flex justify-between items-center border-b border-border/50 pb-4">
                 How It Works <ArrowRight size={20} />
               </Link>
-              <Link href="#pricing" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-white hover:text-primary transition-colors flex justify-between items-center border-b border-white/10 pb-4">
+              <Link href="#pricing" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-foreground hover:text-primary transition-colors flex justify-between items-center border-b border-border/50 pb-4">
                 Pricing <ArrowRight size={20} />
               </Link>
-              <Link href="#contact" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-white hover:text-primary transition-colors flex justify-between items-center border-b border-white/10 pb-4">
+              <Link href="#contact" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-foreground hover:text-primary transition-colors flex justify-between items-center border-b border-border/50 pb-4">
                 Contact <ArrowRight size={20} />
               </Link>
             </div>
 
             <div className="mt-auto pt-10 flex flex-col gap-4">
-              <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl mb-4 border border-white/10">
-                <span className="text-white font-bold">Switch Theme</span>
+              <div className="flex items-center justify-between p-4 bg-muted rounded-2xl mb-4 border border-border">
+                <span className="text-foreground font-bold">Switch Theme</span>
                 <button 
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                     className="p-3 bg-primary/20 rounded-xl text-primary"
@@ -107,10 +107,10 @@ export default function LandingPage() {
                 </button>
               </div>
               <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="outline" className="w-full h-14 rounded-2xl text-lg font-bold border-white/20 text-white hover:bg-white/10">Log in</Button>
+                <Button variant="outline" className="w-full h-14 rounded-2xl text-lg font-bold">Log in</Button>
               </Link>
               <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
-                <Button className="w-full h-14 rounded-2xl text-lg font-bold shadow-2xl shadow-primary/40">Get Started Free</Button>
+                <Button className="w-full h-14 rounded-2xl text-lg font-bold shadow-2xl shadow-primary/20">Get Started Free</Button>
               </Link>
             </div>
           </motion.div>
@@ -119,18 +119,18 @@ export default function LandingPage() {
 
       <main className="flex-1">
         <section className="relative overflow-hidden pt-32 pb-40 md:pt-48 md:pb-60">
-          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none bg-[#02040a]">
-            {/* Animated Mesh blobs */}
-            <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-blue-600/20 blur-[130px] rounded-full animate-pulse" />
-            <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-indigo-600/15 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
-            <div className="absolute bottom-[-10%] left-[15%] w-[45%] h-[45%] bg-purple-600/10 blur-[110px] rounded-full animate-pulse" style={{ animationDelay: '4s' }} />
-            <div className="absolute bottom-[10%] right-[10%] w-[40%] h-[40%] bg-sky-400/10 blur-[100px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none bg-background">
+            {/* Animated Mesh blobs - different colors for light/dark */}
+            <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-blue-600/10 dark:bg-blue-600/20 blur-[130px] rounded-full animate-pulse" />
+            <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-indigo-600/10 dark:bg-indigo-600/15 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
+            <div className="absolute bottom-[-10%] left-[15%] w-[45%] h-[45%] bg-purple-600/10 dark:bg-purple-600/10 blur-[110px] rounded-full animate-pulse" style={{ animationDelay: '4s' }} />
+            <div className="absolute bottom-[10%] right-[10%] w-[40%] h-[40%] bg-sky-400/10 dark:bg-sky-400/10 blur-[100px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
             
             {/* Dynamic Grid Overlay */}
-            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(255,255,255,0.05) 1.5px, transparent 1.5px)', backgroundSize: '60px 60px' }} />
+            <div className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]" style={{ backgroundImage: 'linear-gradient(currentColor 1.5px, transparent 1.5px), linear-gradient(90deg, currentColor 1.5px, transparent 1.5px)', backgroundSize: '60px 60px' }} />
             
             {/* Glossy gradient wrap */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#02040a]/50 to-[#02040a]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
           </div>
 
           <div className="container px-4 mx-auto text-center relative z-10">
@@ -148,7 +148,7 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent leading-[0.95] md:leading-[0.9]"
+                className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-foreground to-foreground/50 bg-clip-text text-transparent leading-[0.95] md:leading-[0.9]"
             >
               Architect Your <br className="hidden md:block" />
               <span className="text-primary italic">Success Journey.</span>
@@ -158,7 +158,7 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-lg md:text-2xl text-white/70 max-w-3xl mx-auto mb-12 font-medium leading-relaxed"
+                className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 font-medium leading-relaxed"
             >
               The industry-standard AI engine for career acceleration. From Data Architecture to Quantum Computing, we engineer your path to excellence.
             </motion.p>
