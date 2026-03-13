@@ -13,8 +13,27 @@ import { motion } from 'framer-motion';
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
 
 const CAREER_SUGGESTIONS = [
-  'Web Developer', 'Data Analyst', 'UI/UX Designer', 'AI Engineer',
-  'Cybersecurity Expert', 'DevOps Engineer', 'Mobile App Developer', 'Product Manager',
+  // Technology & Digital
+  'Web Developer', 'Data Analyst', 'UI/UX Designer', 'AI Engineer', 'Cybersecurity Expert', 
+  'DevOps Engineer', 'Mobile App Developer', 'Product Manager', 'Data Scientist', 'Cloud Architect',
+  
+  // Medical & Healthcare
+  'Medical Doctor', 'Surgeon', 'Registered Nurse', 'Dentist', 'Pharmacist', 'Physiotherapist', 'Psychologist',
+  
+  // Business, Finance & Marketing
+  'Chartered Accountant', 'Investment Banker', 'Financial Analyst', 'HR Manager', 'Digital Marketer', 
+  'Entrepreneur', 'Stock Trader', 'Business Consultant', 'Sales Executive',
+  
+  // Engineering & Creative Arts
+  'Civil Engineer', 'Mechanical Engineer', 'Architect', 'Electrical Engineer', 'Robotics Engineer',
+  'Graphic Designer', 'Interior Designer', 'Film Maker', 'Photographer', 'Fashion Designer',
+  
+  // Legal, Science & Education
+  'Corporate Lawyer', 'Criminal Lawyer', 'Scientist', 'Space Researcher', 'Professor', 'School Teacher',
+  
+  // Vocational & Others
+  'Commercial Pilot', 'Professional Chef', 'Civil Servant (IAS/IPS)', 'Fitness Coach', 'Content Creator',
+  'Journalist', 'Air Hostess', 'Real Estate Agent', 'Event Manager'
 ];
 
 export default function SignupPage() {
