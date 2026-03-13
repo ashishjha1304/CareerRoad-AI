@@ -66,22 +66,23 @@ export default function LandingPage() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-b border-border bg-background absolute top-16 left-0 w-full z-40 overflow-hidden"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="md:hidden fixed top-16 left-0 w-full h-[calc(100vh-64px)] bg-background z-[60] border-t border-border overflow-y-auto"
           >
-            <div className="container px-4 py-8 flex flex-col gap-6 text-lg font-bold">
-              <Link href="#features" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors">Features</Link>
-              <Link href="#how-it-works" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors">How it works</Link>
-              <Link href="#pricing" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors">Pricing</Link>
-              <Link href="#contact" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors">Contact</Link>
-              <div className="pt-4 border-t border-border flex flex-col gap-4">
+            <div className="container px-6 py-10 flex flex-col gap-8 text-xl font-bold">
+              <Link href="#features" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors py-2 border-b border-border/50">Features</Link>
+              <Link href="#how-it-works" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors py-2 border-b border-border/50">How it works</Link>
+              <Link href="#pricing" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors py-2 border-b border-border/50">Pricing</Link>
+              <Link href="#contact" onClick={() => setIsMenuOpen(false)} className="hover:text-primary transition-colors py-2 ">Contact</Link>
+              
+              <div className="mt-4 flex flex-col gap-4">
                 <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full h-12 rounded-xl">Log in</Button>
+                  <Button variant="outline" className="w-full h-14 rounded-2xl text-lg font-bold">Log in</Button>
                 </Link>
                 <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full h-12 rounded-xl">Get Started</Button>
+                  <Button className="w-full h-14 rounded-2xl text-lg font-bold shadow-xl shadow-primary/20">Get Started</Button>
                 </Link>
               </div>
             </div>
