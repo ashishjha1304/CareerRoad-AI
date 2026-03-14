@@ -270,7 +270,7 @@ export default function LandingPage() {
                             </Button>
                         </Link>
                         <Link href="#features">
-                            <Button size="lg" variant="outline" className="h-14 px-10 text-lg font-bold rounded-2xl border-white/20 text-white hover:bg-white/10 w-full sm:w-auto">
+                            <Button size="lg" variant="outline" className="h-14 px-10 text-lg font-bold rounded-2xl border-white/20 text-white hover:bg-white/10 bg-transparent w-full sm:w-auto">
                                 Explore Features
                             </Button>
                         </Link>
